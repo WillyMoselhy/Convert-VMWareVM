@@ -76,9 +76,6 @@ Param(
     [string] $DestinationFolderPath,
 
     [Parameter(Mandatory=$false,Position=4)]
-    [switch] $SaveAdditionalDisksInDifferentLocation,
-
-    [Parameter(Mandatory=$false,Position=4)]
     [string] $AdditionalDisksPath,
     
     [Parameter(Mandatory=$false,Position=4)]
@@ -138,7 +135,7 @@ try{
 
     #endregion
 
-    #region:Prepare Enviroments
+    #region:Prepare Environment
 
         #Import MVMC Module from local folder
         Import-Module .\MVMCCmdlet\MvmcCmdlet.psd1
@@ -220,8 +217,7 @@ try{
             WriteInfoHighlighted "Template generation match VMWare."
         }
     #endregion
-    
-
+   
     #region: Create some variables
         #VMWare VM Object and specs   
         WriteInfo "Getting VM specs from VMWare."
