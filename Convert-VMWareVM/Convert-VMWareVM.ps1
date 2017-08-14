@@ -19,12 +19,29 @@
         and is now discontiued, its binaries are included with this script and should in the same
         folder as .\MVMCCmdlet.
 
-    .PARAMETER VMName
-        ANCHOR FOR PARAMETER 1
-    .PARAMETER SourceFolderPath
-        ANCHOR FOR PARAMETER 2      
     .EXAMPLE
-        ANCHOR FOR EXAMPLES
+        "VM1","VM2" | foreach {$SplattingRocks = @{
+            HVManagement          = "VMM"
+            VMMServer             = "VMM Server Name"
+            #VMMCredentials        = $VMMCredentials 
+            VMWareVSphereServer   = "vSphere Server Name"
+            VMWareCredentials     = $VMWareCredentials
+            VMName                = $_ 
+            UseVMwareCPUandRAM    = $true
+            VMMTemplateName       = "Blank Generation 1 Template"
+            DestinationFolderPath = "C:\ClusterStorage\Volume5"
+            AdditionalDisksPath   = "C:\ClusterStorage\Volume1"
+            StagingFolderPath     = "C:\VMWareMigrate"
+            DoNotRedownload       = $true
+            VHDXType              = "FixedHardDisk"
+            Cleanup               = $true
+            StartVM               = $true
+            LogFolderPath         = "C:\temp"
+            UninstallVMWareTools  = $true
+        } ;
+        & '.\Convert-VMWareVM.ps1' @SplattingRocks }
+        
+        This example will unisntall VMWare Tools from VM1 and VM2 and convert them.
 #>
 
 #Requires -Modules VMware.VimAutomation.Core
@@ -32,20 +49,20 @@
 #region: Parameters
 [CmdletBinding()]
 Param(
-    #Name of the VM to migrate
+    #Name of the VM to migrate. A VM with the same name must exist in vSphere.
     [Parameter(Mandatory=$true,ValueFromPipeline = $true)]
     [string] $VMName,
 
-    #VMM or Hyper - Currenly only VMM is developed.
+    #Currently only accepts teh value "VMM". In the future I may add the option to convert to Hyper-V or Hyper-V clustered VM.
     [Parameter(Mandatory=$false,Position=1)]
     [ValidateSet("VMM")]
     [string] $HVManagement = "VMM",
 
-    #VMM server or cluster name
+    #Name, FQDN, or IP Address of the VMM server of VMM cluster service.
     [Parameter(Mandatory=$true)]
     [string] $VMMServer,
 
-    #Credentials to connect to VMM server
+    #Username and password for account with Administrator permissions on VMM. If not supplied the script will attempt connecting using user account.
     [Parameter(Mandatory=$false)]
     [pscredential] $VMMCredentials,
     
@@ -117,6 +134,7 @@ Param(
 #endregion
 
 begin{
+$ErrorActionPreference = Stop
 try{
     #To Calculate Conversion time
     $trace = "" #To save log as a txt
