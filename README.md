@@ -1,4 +1,4 @@
-@# Convert-VMWareVM
+# Convert-VMWareVM
 A PowerShell script that converts a VMWare VM on VCenter to Hyper-V VM.
 
 ## Notice
@@ -39,4 +39,4 @@ The below example will convert VM1 and VM2:
     LogFolderPath         = "C:\temp"
     UninstallVMWareTools  = $true
 } ;
-& '.\Convert-VMWare2.ps1' @SplattingRocks }
+& '.\Convert-VMWareVM.ps1' @SplattingRocks }
