@@ -1,4 +1,4 @@
-# Convert-VMWareVM
+@# Convert-VMWareVM
 A PowerShell script that converts a VMWare VM on VCenter to Hyper-V VM.
 
 ## Notice
@@ -20,6 +20,7 @@ Run the script on the Hyper-V server that will host the VM. In a clustered envir
 The below example will convert VM1 and VM2:
 
 "VM1","VM2" | foreach {$SplattingRocks = @{
+
     HVManagement          = "VMM"
     VMMServer             = "VMMServerFQDN"
     #VMMCredentials        = $VMMCredentials 
