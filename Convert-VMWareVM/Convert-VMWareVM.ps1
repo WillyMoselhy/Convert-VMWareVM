@@ -134,7 +134,8 @@ Param(
 #endregion
 
 begin{
-$ErrorActionPreference = Stop
+$ErrorActionPreference = "Stop"
+
 try{
     #To Calculate Conversion time
     $trace = "" #To save log as a txt
@@ -308,7 +309,7 @@ try{
                     #endregion
                     #region: Check that VMWare Tools are healthy
                     writeinfo "Checking that VMWare Tools are healthy." -WaitForResult
-                    if($VMWareVM.ExtensionData.Guest.ToolsStatus -ne "ToolsOk") {Throw "VM Ware Tools are not healthy."}
+                    if($VMWareVM.ExtensionData.Guest.ToolsStatus -notin ("ToolsOk","ToolsOld")) {Throw "VM Ware Tools are not healthy."}
                     WriteResult -Pass
                     #endregion
               }
