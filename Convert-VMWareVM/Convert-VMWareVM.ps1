@@ -504,7 +504,7 @@ try{
         
         #Download VMDK
         $VMDKDatastore = Get-VMWareDatastore -ID ($VMDK.ExtensionData.Backing.Datastore)
-        $VMDKPath = $VMDK.Filename.Split("] ")[-1].replace("/","\")
+        $VMDKPath = $VMDK.Filename.Split("]")[-1].replace("/","\").trim()
         $VMDKFileName = $VMDKPath.Split("\")[-1]
         $VMDKFlatPath = $VMDKPath.Replace(".vmdk","-flat.vmdk")
         $VMDKFlatFileName = $VMDKFlatPath.Split("\")[-1]
